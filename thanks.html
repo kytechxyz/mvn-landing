@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirmed — Minimum Viable Nutrition</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE8;
+  --ink:#14181A;
+  --graphite:#5C6469;
+  --trace:#1F5F5B;
+  --flag:#A6421C;
+  --rule:#C7CBC6;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --gutter:clamp(1.25rem,5vw,3rem);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.shell{
+  max-width:76rem;margin:0 auto;padding-inline:var(--gutter);
+  width:100%;
+}
+main.shell{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-block:clamp(2.5rem,8vw,5rem);
+}
+.mark{
+  font-family:var(--mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--flag);
+  margin:0 0 .35rem;
+}
+.mark span{color:var(--graphite);}
+.status{
+  display:flex;align-items:center;gap:.6rem;
+  margin:0 0 1.6rem;
+}
+.dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--trace);flex:none;
+}
+.status p{
+  margin:0;font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--graphite);
+}
+h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.1rem,6vw,3.4rem);
+  line-height:1.02;letter-spacing:-.03em;
+  margin:0 0 1.1rem;max-width:16ch;
+}
+.sub{
+  font-size:clamp(1rem,1.6vw,1.12rem);
+  color:var(--graphite);
+  margin:0 0 2.4rem;max-width:38ch;
+}
+.sub strong{color:var(--ink);font-weight:600;}
+
+.next{
+  border-top:1px solid var(--rule);
+  padding-top:1.6rem;
+  margin:0 0 2.6rem;
+  max-width:38ch;
+}
+.next h2{
+  font-family:var(--mono);font-size:.72rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--graphite);margin:0 0 .9rem;
+}
+.next ol{
+  margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:.85rem;
+}
+.next li{
+  display:flex;gap:.85rem;
+  font-size:.95rem;
+}
+.next li b{
+  font-family:var(--mono);color:var(--flag);
+  font-weight:600;flex:none;
+}
+
+.actions{
+  display:flex;flex-wrap:wrap;gap:.75rem;
+  margin-bottom:.9rem;
+}
+.btn{
+  font-family:var(--mono);font-size:.8rem;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:.72rem 1.15rem;
+  border:1px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  cursor:pointer;border-radius:0;
+  text-decoration:none;display:inline-block;
+  transition:background .16s ease,color .16s ease;
+}
+.btn:hover{background:var(--trace);border-color:var(--trace);}
+.btn:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
+.btn--ghost{background:transparent;color:var(--ink);}
+.btn--ghost:hover{background:var(--ink);color:var(--paper);}
+
+.fineprint{
+  font-family:var(--mono);font-size:.7rem;color:var(--graphite);
+  max-width:38ch;line-height:1.6;
+}
+.fineprint a{color:var(--ink);}
+
+.foot{
+  border-top:1px solid var(--ink);
+  padding-block:1.4rem 2rem;
+  font-family:var(--mono);font-size:.7rem;
+  color:var(--graphite);
+}
+.foot a{color:var(--ink);}
+
+a{color:var(--trace);}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+
+<main class="shell">
+  <p class="mark">Confirmed <span>/ subscription</span></p>
+  <div class="status"><span class="dot"></span><p>Signal received</p></div>
+
+  <h1>You're on the list.</h1>
+  <p class="sub">Your email is confirmed. You'll hear from this list <strong>twice</strong> — once when the workspace ships, and once when the follow-up sleep study results come back, whichever direction they go.</p>
+
+  <div class="next">
+    <h2>What happens next</h2>
+    <ol>
+      <li><b>01</b><span>Nothing, for now. The workspace is still being built — no filler emails while you wait.</span></li>
+      <li><b>02</b><span>You'll get one email the day it ships, with early-bird pricing honored for anyone already on this list.</span></li>
+      <li><b>03</b><span>A separate email when the AHI follow-up comes back — published unedited, same as everything else in this project.</span></li>
+    </ol>
+  </div>
+
+  <div class="actions">
+    <a class="btn" href="/">Back to the overview</a>
+    <a class="btn btn--ghost" href="#" id="preorder-link">Lock in early-bird pricing — $39</a>
+  </div>
+  <p class="fineprint">Preorder is fully refundable, no questions, any time before launch. If the free list is enough for you, there's nothing else to do.</p>
+</main>
+
+<footer class="foot shell">
+  <p>Minimum Viable Nutrition · a project by KyTech</p>
+</footer>
+
+<script>
+  // Keep this pointed at whatever checkout URL you set on the main page.
+  document.getElementById('preorder-link').href = 'https://REPLACE-WITH-YOUR-CHECKOUT-LINK';
+</script>
+</body>
+</html>
