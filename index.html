@@ -8,6 +8,8 @@
 <meta property="og:title" content="Minimum Viable Nutrition">
 <meta property="og:description" content="A weight-reduction protocol documented like infrastructure. 246 lbs to 198, seven months, every data point published.">
 <meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -83,6 +85,11 @@ body{
   text-transform:uppercase;
   color:var(--graphite);
   margin:0 0 1.4rem;
+}
+.hero__mark{
+  width:44px;height:auto;
+  display:block;
+  margin:0 0 1.1rem;
 }
 .hero__title{
   font-family:var(--display);
@@ -320,6 +327,7 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
 
   <!-- ============ HERO ============ -->
   <header class="hero">
+    <img class="hero__mark" src="logo.png" alt="Minimum Viable Nutrition" width="44" height="49">
     <p class="hero__eyebrow">Notion workspace · ships fall 2026</p>
     <h1 class="hero__title">Minimum Viable Nutrition</h1>
     <p class="hero__sub">A weight-reduction protocol documented like infrastructure — runbooks, telemetry, failure modes, rollback procedures. Built by someone who <strong>doesn't cook</strong>, <strong>eats most meals out</strong>, and <strong>won't tolerate daily tracking</strong>.</p>
