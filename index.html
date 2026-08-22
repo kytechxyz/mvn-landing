@@ -212,6 +212,10 @@ body{
   grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));
   align-items:start;
 }
+.offer--single{
+  grid-template-columns:1fr;
+  max-width:24rem;
+}
 .card{
   border:1px solid var(--ink);
   padding:1.6rem 1.4rem 1.4rem;
@@ -400,31 +404,21 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
 
   <!-- ============ OFFER ============ -->
   <section class="band" id="join">
-    <p class="band__mark">$39 / $49 <span>/ getting it</span></p>
+    <p class="band__mark">Free <span>/ getting it</span></p>
     <h2 class="band__title">Ships this fall</h2>
 
-    <div class="offer">
+    <div class="offer offer--single">
       <div class="card card--quiet">
         <p class="card__tag">Waitlist</p>
         <p class="card__price">Free</p>
-        <p>Get told when it ships. It's also where the follow-up sleep study results get published — better, unremarkable, or unchanged.</p>
+        <p>Get told when it ships, at $49. It's also where the follow-up sleep study results get published — better, unremarkable, or unchanged.</p>
 
-        <!-- Replace action with your ConvertKit / Buttondown / Formspree endpoint -->
         <form class="field" action="https://app.kit.com/forms/9810307/subscriptions" method="POST">
           <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
           <input id="email" type="email" name="email_address" placeholder="you@domain.com" required autocomplete="email">
           <button class="btn" type="submit">Get notified</button>
         </form>
         <p class="fineprint">No spam. The list exists to say when it's ready and what the results were.</p>
-      </div>
-
-      <div class="card">
-        <p class="card__tag">Early-bird preorder</p>
-        <p class="card__price">$39 <s>$49</s></p>
-        <p>The workspace the day it ships, at the lowest price it will ever be, plus every quarterly refresh for the first year.</p>
-        <!-- Replace href with your Gumroad / Lemon Squeezy checkout link -->
-        <a class="btn btn--ghost" href="https://REPLACE-WITH-YOUR-CHECKOUT-LINK">Preorder — $39</a>
-        <p class="fineprint">Fully refundable, no questions, any time before launch.</p>
       </div>
     </div>
   </section>
@@ -469,18 +463,19 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
     <p class="band__mark">FAQ <span>/ questions</span></p>
     <h2 class="band__title">Before you ask</h2>
     <div class="faq col">
-      <details><summary>When does it ship?</summary><p>Fall 2026. Waitlist and preorders get notified first.</p></details>
+      <details><summary>When does it ship?</summary><p>Fall 2026. The waitlist gets notified first, and gets first access at launch.</p></details>
       <details><summary>Do I need to be technical?</summary><p>No. The vocabulary is engineering-flavored — runbooks, telemetry, failure modes — but nothing requires a technical background. If you're comfortable with a spreadsheet, you're fine.</p></details>
       <details><summary>What if I don't cook?</summary><p>That's the design constraint the whole thing was built around. Every recipe is assembly rather than cooking, and the largest module is about eating in places you don't control.</p></details>
       <details><summary>What's the $7/month tier?</summary><p>Optional, offered after purchase, never required. Quarterly refreshes: new restaurant verdicts, seasonal menu re-audits, new recipe modules. The core workspace is complete without it.</p></details>
-      <details><summary>Is the preorder really refundable?</summary><p>Yes. Email any time before launch and it's returned, no questions.</p></details>
+      <details><summary>Why isn't there a preorder?</summary><p>There was, briefly. Payment processors generally won't approve checkout for a product that isn't finished yet, and they're right to be cautious about that. So it's waitlist-only until the workspace actually ships — at which point you can buy it directly, not preorder it on faith.</p></details>
       <details><summary>Will this cure my sleep apnea?</summary><p>No, and be skeptical of anything claiming otherwise. Weight loss reduces AHI in the clinical literature, but it's not a fixed exchange rate, it doesn't work identically for everyone, and it doesn't reliably eliminate apnea on its own. It's an adjunct to treatment — not a replacement for your sleep physician or your CPAP.</p></details>
     </div>
   </section>
 
   <footer class="foot">
     <p>Minimum Viable Nutrition · a project by KyTech<br>
-    Not medical or nutritional advice. Talk to your doctor before changing your diet significantly.</p>
+    Not medical or nutritional advice. Talk to your doctor before changing your diet significantly.<br>
+    <a href="/terms.html">Terms of Use</a> · <a href="/privacy.html">Privacy Policy</a></p>
   </footer>
 
 </main>
