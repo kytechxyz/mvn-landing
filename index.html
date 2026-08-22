@@ -413,9 +413,9 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
         <p class="card__price">Free</p>
         <p>Get told when it ships, at $49. It's also where the follow-up sleep study results get published — better, unremarkable, or unchanged.</p>
 
-        <form class="field" action="https://app.kit.com/forms/9810307/subscriptions" method="POST">
+        <form class="field seva-form formkit-form" action="https://app.kit.com/forms/9810307/subscriptions" method="post" data-sv-form="9810307" data-uid="b600acecb4">
           <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
-          <input id="email" type="email" name="email_address" placeholder="you@domain.com" required autocomplete="email">
+          <input id="email" class="formkit-input" type="email" name="email_address" placeholder="you@domain.com" required autocomplete="email">
           <button class="btn" type="submit">Get notified</button>
         </form>
         <p class="fineprint">No spam. The list exists to say when it's ready and what the results were.</p>
@@ -579,5 +579,6 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
   }
 })();
 </script>
+<script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
 </body>
 </html>
