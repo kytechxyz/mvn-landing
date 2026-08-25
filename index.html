@@ -338,12 +338,12 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
 
     <figure class="chart">
       <figcaption class="chart__head">
-        <span>Recorded mass · <b>Jan 8 – Aug 14, 2026</b></span>
+        <span>Recorded mass · <b>Jan 8 – Aug 21, 2026</b></span>
         <span>Net <b>−48.0 lbs</b></span>
         <span>BMI <b>35 → 28.2</b></span>
       </figcaption>
 
-      <svg viewBox="0 0 900 330" role="img" aria-label="Line chart of body mass from 246 pounds on January 8 2026 to 198 pounds on August 14 2026, with a flagged low outlier of 195.8 on July 10 and a flat four-week average of 197.7 through the final seven weeks.">
+      <svg viewBox="0 0 900 330" role="img" aria-label="Line chart of body mass from 246 pounds on January 8 2026 to 195.8 pounds on August 21 2026, with a flagged low outlier of 195.8 on July 10 that coincidentally repeats on August 21, and a flat four-week average of 197.2 through the final eight weeks.">
         <!-- horizontal grid -->
         <g id="grid"></g>
         <!-- four-week average overlay -->
@@ -363,7 +363,7 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
       </div>
     </figure>
 
-    <p class="chart__note">Look at July 10. That 195.8 sits between a 198.4 and a 198.6 — a single low reading, not a milestone. It got logged as an achievement at the time. <b>Low outliers are more dangerous than high ones:</b> a bad number gets scrutinized, a good one gets promoted to your new baseline. And the last seven weeks are flat. Both are in the product, unedited.</p>
+    <p class="chart__note">Look at July 10. That 195.8 sits between a 198.4 and a 198.6 — a single low reading, not a milestone. It got logged as an achievement at the time. <b>Low outliers are more dangerous than high ones:</b> a bad number gets scrutinized, a good one gets promoted to your new baseline. On August 21, the exact same number showed up again — a genuine coincidence, not a pattern. The four-week average moved from 197.7 to 197.2, real but small. Two more Fridays will say whether this is real. Both readings are in the product, unedited.</p>
   </header>
 
   <!-- ============ CLAIMS ============ -->
@@ -497,11 +497,12 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
     [190, 198.6, 'Jul 17'],
     [197, 198.0, 'Jul 24'],
     [211, 197.0, 'Aug 7'],
-    [218, 198.0, 'Aug 14']
+    [218, 198.0, 'Aug 14'],
+    [225, 195.8, 'Aug 21']
   ];
 
   var W=900, H=330, L=46, R=104, T=18, B=34;
-  var xMin=0, xMax=218, yMin=192, yMax=250;
+  var xMin=0, xMax=225, yMin=192, yMax=250;
 
   function X(d){ return L + (d - xMin)/(xMax-xMin) * (W-L-R); }
   function Y(v){ return T + (yMax - v)/(yMax-yMin) * (H-T-B); }
@@ -517,7 +518,7 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
     t.textContent=v; grid.appendChild(t);
   });
   // x labels
-  [[0,'JAN'],[54,'MAR'],[110,'APR'],[145,'JUN'],[218,'AUG']].forEach(function(p){
+  [[0,'JAN'],[54,'MAR'],[110,'APR'],[145,'JUN'],[221,'AUG']].forEach(function(p){
     var t=el('text',{x:X(p[0]),y:H-10,'class':'axis-label','text-anchor':'middle'});
     t.textContent=p[1]; grid.appendChild(t);
   });
@@ -539,7 +540,7 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
   // points
   var pts=document.getElementById('pts');
   D.forEach(function(p){
-    var flag = (p[2]==='Jul 10');
+    var flag = (p[2]==='Jul 10' || p[2]==='Aug 21');
     var c=el('circle',{cx:X(p[0]),cy:Y(p[1]),r:flag?4.5:3.2,'class':'pt'+(flag?' pt--flag':'')});
     var ttl=el('title'); ttl.textContent=p[2]+' — '+p[1].toFixed(1)+' lbs';
     c.appendChild(ttl); pts.appendChild(c);
@@ -554,9 +555,9 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
   var s2=el('text',{x:X(183)-4,y:Y(195.8)+43,'class':'anno','text-anchor':'middle'}); s2.textContent='195.8'; an.appendChild(s2);
   var s3=el('text',{x:X(183)-4,y:Y(195.8)+56,'class':'anno','text-anchor':'middle'}); s3.textContent='low outlier'; an.appendChild(s3);
   // flat stretch
-  an.appendChild(el('line',{x1:X(190),y1:Y(197.7),x2:W-R+14,y2:Y(197.7),'class':'grid-line'}));
-  var s4=el('text',{x:W-R+20,y:Y(197.7)-6,'class':'anno anno--quiet'}); s4.textContent='197.7 avg'; an.appendChild(s4);
-  var s5=el('text',{x:W-R+20,y:Y(197.7)+9,'class':'anno anno--quiet'}); s5.textContent='7 wks flat'; an.appendChild(s5);
+  an.appendChild(el('line',{x1:X(190),y1:Y(197.2),x2:W-R+14,y2:Y(197.2),'class':'grid-line'}));
+  var s4=el('text',{x:W-R+20,y:Y(197.2)-6,'class':'anno anno--quiet'}); s4.textContent='197.2 avg'; an.appendChild(s4);
+  var s5=el('text',{x:W-R+20,y:Y(197.2)+9,'class':'anno anno--quiet'}); s5.textContent='watching'; an.appendChild(s5);
 
   // draw-on animation
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
