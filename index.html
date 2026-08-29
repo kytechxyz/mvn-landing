@@ -332,7 +332,7 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
   <!-- ============ HERO ============ -->
   <header class="hero">
     <img class="hero__mark" src="logo.png" alt="Minimum Viable Nutrition" width="44" height="49">
-    <p class="hero__eyebrow">Notion workspace · ships fall 2026</p>
+    <p class="hero__eyebrow">Notion workspace · available now</p>
     <h1 class="hero__title">Minimum Viable Nutrition</h1>
     <p class="hero__sub">A weight-reduction protocol documented like infrastructure — runbooks, telemetry, failure modes, rollback procedures. Built by someone who <strong>doesn't cook</strong>, <strong>eats most meals out</strong>, and <strong>won't tolerate daily tracking</strong>.</p>
 
@@ -404,21 +404,29 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
 
   <!-- ============ OFFER ============ -->
   <section class="band" id="join">
-    <p class="band__mark">Free <span>/ getting it</span></p>
-    <h2 class="band__title">Ships this fall</h2>
+    <p class="band__mark">$49 <span>/ getting it</span></p>
+    <h2 class="band__title">Available now</h2>
 
-    <div class="offer offer--single">
+    <div class="offer">
+      <div class="card">
+        <p class="card__tag">Full Workspace</p>
+        <p class="card__price">$49</p>
+        <p>Instant delivery — click purchase, get a link, click Duplicate, and it's your own fully editable copy. Nothing shared back, nothing dependent on my account staying accessible.</p>
+        <a class="btn" href="https://mvn.lemonsqueezy.com/checkout/buy/3f421d20-01f3-49b0-aec0-07ae5eeaffc7">Buy Now — $49</a>
+        <p class="fineprint">One-time purchase. An optional $7/mo tier is available after purchase for quarterly content refreshes — never required.</p>
+      </div>
+
       <div class="card card--quiet">
-        <p class="card__tag">Waitlist</p>
+        <p class="card__tag">Free Waitlist</p>
         <p class="card__price">Free</p>
-        <p>Get told when it ships, at $49. It's also where the follow-up sleep study results get published — better, unremarkable, or unchanged.</p>
+        <p>Not ready to buy yet? Join the list — it's also where I'll publish the follow-up sleep study results when they come back, better, unremarkable, or unchanged.</p>
 
         <form class="field" action="https://app.kit.com/forms/9810307/subscriptions" method="post">
           <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
           <input id="email" type="email" name="email_address" placeholder="you@domain.com" required autocomplete="email">
-          <button class="btn" type="submit">Get notified</button>
+          <button class="btn btn--ghost" type="submit">Get notified</button>
         </form>
-        <p class="fineprint">No spam. The list exists to say when it's ready and what the results were.</p>
+        <p class="fineprint">No spam. The list exists to share the results and nothing else.</p>
       </div>
     </div>
   </section>
@@ -463,12 +471,12 @@ a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
     <p class="band__mark">FAQ <span>/ questions</span></p>
     <h2 class="band__title">Before you ask</h2>
     <div class="faq col">
-      <details><summary>When does it ship?</summary><p>Fall 2026. The waitlist gets notified first, and gets first access at launch.</p></details>
+      <details><summary>How fast do I actually get it?</summary><p>Under a minute. Click purchase, a link arrives, click Duplicate, pick a workspace — that's it. No waiting, no manual step on my end.</p></details>
       <details><summary>Do I need to be technical?</summary><p>No. The vocabulary is engineering-flavored — runbooks, telemetry, failure modes — but nothing requires a technical background. If you're comfortable with a spreadsheet, you're fine.</p></details>
       <details><summary>What if I don't cook?</summary><p>That's the design constraint the whole thing was built around. Every recipe is assembly rather than cooking, and the largest module is about eating in places you don't control.</p></details>
       <details><summary>Does "Cook Tonight" instantly know what I have?</summary><p>Not on day one, and I'd rather say so than let you find out the hard way. It filters recipes to what's actually in your kitchen, but that requires linking each recipe to its ingredients — which happens naturally the first time you cook it, not automatically the moment you buy the workspace. Link a handful of recipes through real use over a few weeks and it gets genuinely useful. Trying to link all 45 upfront is a chore nobody should do.</p></details>
       <details><summary>What's the $7/month tier?</summary><p>Optional, offered after purchase, never required. Quarterly refreshes: new restaurant verdicts, seasonal menu re-audits, new recipe modules. The core workspace is complete without it.</p></details>
-      <details><summary>Why isn't there a preorder?</summary><p>There was, briefly. Payment processors generally won't approve checkout for a product that isn't finished yet, and they're right to be cautious about that. So it's waitlist-only until the workspace actually ships — at which point you can buy it directly, not preorder it on faith.</p></details>
+      <details><summary>Wasn't this waitlist-only for a while?</summary><p>Yes — briefly. Payment processors won't approve checkout for a product that isn't finished, and they're right to be cautious about that. The workspace is finished now, checkout is live, and this page reflects that.</p></details>
       <details><summary>Will this cure my sleep apnea?</summary><p>No, and be skeptical of anything claiming otherwise. Weight loss reduces AHI in the clinical literature, but it's not a fixed exchange rate, it doesn't work identically for everyone, and it doesn't reliably eliminate apnea on its own. It's an adjunct to treatment — not a replacement for your sleep physician or your CPAP.</p></details>
     </div>
   </section>
