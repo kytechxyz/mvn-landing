@@ -1,604 +1,1128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Minimum Viable Nutrition — a weight protocol documented like infrastructure</title>
-<meta name="description" content="246 lbs to 198. Seven months. A weight-reduction protocol documented like infrastructure: runbooks, telemetry, failure modes, rollback procedures. Every data point published, including the flat ones.">
-<meta property="og:title" content="Minimum Viable Nutrition">
-<meta property="og:description" content="A weight-reduction protocol documented like infrastructure. 246 lbs to 198, seven months, every data point published.">
-<meta property="og:type" content="website">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#E9EBE8;
-  --paper-2:#DFE2DE;
-  --ink:#14181A;
-  --graphite:#5C6469;
-  --trace:#1F5F5B;
-  --flag:#A6421C;
-  --rule:#C7CBC6;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Minimum Viable Nutrition — a weight protocol documented like
+      infrastructure
+    </title>
+    <meta
+      name="description"
+      content="246 lbs to 198. Seven months. A weight-reduction protocol documented like infrastructure: runbooks, telemetry, failure modes, rollback procedures. Every data point published, including the flat ones."
+    />
+    <meta property="og:title" content="Minimum Viable Nutrition" />
+    <meta
+      property="og:description"
+      content="A weight-reduction protocol documented like infrastructure. 246 lbs to 198, seven months, every data point published."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #e9ebe8;
+        --paper-2: #dfe2de;
+        --ink: #14181a;
+        --graphite: #5c6469;
+        --trace: #1f5f5b;
+        --flag: #a6421c;
+        --rule: #c7cbc6;
 
-  --display:'Archivo',system-ui,sans-serif;
-  --body:'IBM Plex Sans',system-ui,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,monospace;
+        --display: "Archivo", system-ui, sans-serif;
+        --body: "IBM Plex Sans", system-ui, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --measure:34rem;
-  --gutter:clamp(1.25rem,5vw,3rem);
-}
+        --measure: 34rem;
+        --gutter: clamp(1.25rem, 5vw, 3rem);
+      }
 
-*{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;}
-body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:17px;
-  line-height:1.62;
-  -webkit-font-smoothing:antialiased;
-}
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 17px;
+        line-height: 1.62;
+        -webkit-font-smoothing: antialiased;
+      }
 
-/* ---------- shared shell ---------- */
-.shell{
-  max-width:76rem;
-  margin:0 auto;
-  padding-inline:var(--gutter);
-}
-.col{max-width:var(--measure);}
+      /* ---------- shared shell ---------- */
+      .shell {
+        max-width: 76rem;
+        margin: 0 auto;
+        padding-inline: var(--gutter);
+      }
+      .col {
+        max-width: var(--measure);
+      }
 
-/* ---------- section marker ---------- */
-.band{
-  border-top:1px solid var(--rule);
-  padding-block:clamp(3rem,7vw,5.5rem);
-}
-.band__mark{
-  font-family:var(--mono);
-  font-size:.7rem;
-  font-weight:500;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--flag);
-  margin:0 0 .35rem;
-}
-.band__mark span{color:var(--graphite);}
-.band__title{
-  font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(1.6rem,3.4vw,2.4rem);
-  line-height:1.08;
-  letter-spacing:-.02em;
-  margin:0 0 1.5rem;
-  max-width:22ch;
-}
+      /* ---------- section marker ---------- */
+      .band {
+        border-top: 1px solid var(--rule);
+        padding-block: clamp(3rem, 7vw, 5.5rem);
+      }
+      .band__mark {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--flag);
+        margin: 0 0 0.35rem;
+      }
+      .band__mark span {
+        color: var(--graphite);
+      }
+      .band__title {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin: 0 0 1.5rem;
+        max-width: 22ch;
+      }
 
-/* ---------- hero ---------- */
-.hero{padding-block:clamp(2.5rem,6vw,4.5rem) clamp(2rem,5vw,3.5rem);}
-.hero__eyebrow{
-  font-family:var(--mono);
-  font-size:.72rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--graphite);
-  margin:0 0 1.4rem;
-}
-.hero__mark{
-  width:44px;height:auto;
-  display:block;
-  margin:0 0 1.1rem;
-}
-.hero__title{
-  font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(2.6rem,8vw,5.4rem);
-  line-height:.94;
-  letter-spacing:-.035em;
-  margin:0 0 1.4rem;
-  max-width:14ch;
-}
-.hero__sub{
-  font-size:clamp(1.02rem,1.7vw,1.2rem);
-  color:var(--graphite);
-  margin:0 0 2.4rem;
-  max-width:46ch;
-}
-.hero__sub strong{color:var(--ink);font-weight:600;}
+      /* ---------- hero ---------- */
+      .hero {
+        padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 5vw, 3.5rem);
+      }
+      .hero__eyebrow {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--graphite);
+        margin: 0 0 1.4rem;
+      }
+      .hero__mark {
+        width: 44px;
+        height: auto;
+        display: block;
+        margin: 0 0 1.1rem;
+      }
+      .hero__title {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: clamp(2.6rem, 8vw, 5.4rem);
+        line-height: 0.94;
+        letter-spacing: -0.035em;
+        margin: 0 0 1.4rem;
+        max-width: 14ch;
+      }
+      .hero__sub {
+        font-size: clamp(1.02rem, 1.7vw, 1.2rem);
+        color: var(--graphite);
+        margin: 0 0 2.4rem;
+        max-width: 46ch;
+      }
+      .hero__sub strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
 
-/* ---------- chart ---------- */
-.chart{
-  margin:0 0 1rem;
-  border-top:1px solid var(--ink);
-  border-bottom:1px solid var(--rule);
-  padding-block:1.1rem .4rem;
-}
-.chart__head{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.4rem 1.6rem;
-  font-family:var(--mono);
-  font-size:.68rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--graphite);
-  margin-bottom:.9rem;
-}
-.chart__head b{color:var(--ink);font-weight:600;}
-.chart svg{display:block;width:100%;height:auto;overflow:visible;}
+      /* ---------- chart ---------- */
+      .chart {
+        margin: 0 0 1rem;
+        border-top: 1px solid var(--ink);
+        border-bottom: 1px solid var(--rule);
+        padding-block: 1.1rem 0.4rem;
+      }
+      .chart__head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1.6rem;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--graphite);
+        margin-bottom: 0.9rem;
+      }
+      .chart__head b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .chart svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
 
-.grid-line{stroke:var(--rule);stroke-width:1;}
-.axis-label{font-family:var(--mono);font-size:11px;fill:var(--graphite);}
-.trace-line{
-  fill:none;stroke:var(--trace);stroke-width:2.25;
-  stroke-linejoin:round;stroke-linecap:round;
-}
-.avg-line{
-  fill:none;stroke:var(--graphite);stroke-width:1.25;
-  stroke-dasharray:5 4;opacity:.8;
-}
-.pt{fill:var(--paper);stroke:var(--trace);stroke-width:1.75;}
-.pt--flag{stroke:var(--flag);fill:var(--flag);}
-.anno{font-family:var(--mono);font-size:11px;fill:var(--flag);font-weight:500;}
-.anno--quiet{fill:var(--graphite);}
-.anno-rule{stroke:var(--flag);stroke-width:1;stroke-dasharray:3 3;}
+      .grid-line {
+        stroke: var(--rule);
+        stroke-width: 1;
+      }
+      .axis-label {
+        font-family: var(--mono);
+        font-size: 11px;
+        fill: var(--graphite);
+      }
+      .trace-line {
+        fill: none;
+        stroke: var(--trace);
+        stroke-width: 2.25;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
+      .avg-line {
+        fill: none;
+        stroke: var(--graphite);
+        stroke-width: 1.25;
+        stroke-dasharray: 5 4;
+        opacity: 0.8;
+      }
+      .pt {
+        fill: var(--paper);
+        stroke: var(--trace);
+        stroke-width: 1.75;
+      }
+      .pt--flag {
+        stroke: var(--flag);
+        fill: var(--flag);
+      }
+      .anno {
+        font-family: var(--mono);
+        font-size: 11px;
+        fill: var(--flag);
+        font-weight: 500;
+      }
+      .anno--quiet {
+        fill: var(--graphite);
+      }
+      .anno-rule {
+        stroke: var(--flag);
+        stroke-width: 1;
+        stroke-dasharray: 3 3;
+      }
 
-.chart__legend{
-  display:flex;flex-wrap:wrap;gap:.35rem 1.4rem;
-  font-family:var(--mono);font-size:.68rem;color:var(--graphite);
-  padding-top:.7rem;
-}
-.chart__legend i{
-  display:inline-block;width:14px;height:0;
-  border-top:2px solid var(--trace);
-  vertical-align:middle;margin-right:.45rem;
-}
-.chart__legend i.dash{border-top:1.5px dashed var(--graphite);}
-.chart__legend i.flag{
-  width:8px;height:8px;border:0;border-radius:50%;
-  background:var(--flag);margin-bottom:1px;
-}
+      .chart__legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 1.4rem;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--graphite);
+        padding-top: 0.7rem;
+      }
+      .chart__legend i {
+        display: inline-block;
+        width: 14px;
+        height: 0;
+        border-top: 2px solid var(--trace);
+        vertical-align: middle;
+        margin-right: 0.45rem;
+      }
+      .chart__legend i.dash {
+        border-top: 1.5px dashed var(--graphite);
+      }
+      .chart__legend i.flag {
+        width: 8px;
+        height: 8px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--flag);
+        margin-bottom: 1px;
+      }
 
-.chart__note{
-  font-size:.92rem;
-  color:var(--graphite);
-  margin:1.1rem 0 0;
-  max-width:60ch;
-}
-.chart__note b{color:var(--ink);font-weight:600;}
+      .chart__note {
+        font-size: 0.92rem;
+        color: var(--graphite);
+        margin: 1.1rem 0 0;
+        max-width: 60ch;
+      }
+      .chart__note b {
+        color: var(--ink);
+        font-weight: 600;
+      }
 
-/* ---------- claims ---------- */
-.claims{
-  display:grid;
-  gap:2rem;
-  grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));
-}
-.claim h3{
-  font-family:var(--display);
-  font-size:1.02rem;font-weight:600;
-  letter-spacing:-.01em;
-  margin:0 0 .5rem;
-}
-.claim p{margin:0;font-size:.96rem;color:var(--graphite);}
+      /* ---------- claims ---------- */
+      .claims {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      }
+      .claim h3 {
+        font-family: var(--display);
+        font-size: 1.02rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0 0 0.5rem;
+      }
+      .claim p {
+        margin: 0;
+        font-size: 0.96rem;
+        color: var(--graphite);
+      }
 
-/* ---------- modules ---------- */
-.mods{border-top:1px solid var(--rule);}
-.mod{
-  display:grid;
-  grid-template-columns:11rem 1fr;
-  gap:0 2rem;
-  padding-block:1.15rem;
-  border-bottom:1px solid var(--rule);
-}
-.mod dt{
-  font-family:var(--mono);
-  font-size:.78rem;
-  font-weight:500;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  padding-top:.18rem;
-}
-.mod dd{margin:0;color:var(--graphite);font-size:.96rem;}
-@media (max-width:34rem){
-  .mod{grid-template-columns:1fr;gap:.25rem;}
-}
+      /* ---------- modules ---------- */
+      .mods {
+        border-top: 1px solid var(--rule);
+      }
+      .mod {
+        display: grid;
+        grid-template-columns: 11rem 1fr;
+        gap: 0 2rem;
+        padding-block: 1.15rem;
+        border-bottom: 1px solid var(--rule);
+      }
+      .mod dt {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding-top: 0.18rem;
+      }
+      .mod dd {
+        margin: 0;
+        color: var(--graphite);
+        font-size: 0.96rem;
+      }
+      @media (max-width: 34rem) {
+        .mod {
+          grid-template-columns: 1fr;
+          gap: 0.25rem;
+        }
+      }
 
-/* ---------- offer ---------- */
-.offer{
-  display:grid;
-  gap:1.25rem;
-  grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));
-  align-items:start;
-}
-.offer--single{
-  grid-template-columns:1fr;
-  max-width:24rem;
-}
-.card{
-  border:1px solid var(--ink);
-  padding:1.6rem 1.4rem 1.4rem;
-  background:var(--paper);
-}
-.card--quiet{border-color:var(--rule);}
-.card__tag{
-  font-family:var(--mono);font-size:.68rem;
-  letter-spacing:.16em;text-transform:uppercase;
-  color:var(--graphite);margin:0 0 .7rem;
-}
-.card__price{
-  font-family:var(--display);
-  font-weight:800;font-size:2rem;
-  letter-spacing:-.03em;line-height:1;
-  margin:0 0 .55rem;
-}
-.card__price s{color:var(--graphite);font-weight:500;font-size:1.1rem;margin-left:.4rem;}
-.card p{margin:0 0 1.1rem;font-size:.93rem;color:var(--graphite);}
+      /* ---------- offer ---------- */
+      .offer {
+        display: grid;
+        gap: 1.25rem;
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+        align-items: start;
+      }
+      .offer--single {
+        grid-template-columns: 1fr;
+        max-width: 24rem;
+      }
+      .card {
+        border: 1px solid var(--ink);
+        padding: 1.6rem 1.4rem 1.4rem;
+        background: var(--paper);
+      }
+      .card--quiet {
+        border-color: var(--rule);
+      }
+      .card__tag {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--graphite);
+        margin: 0 0 0.7rem;
+      }
+      .card__price {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin: 0 0 0.55rem;
+      }
+      .card__price s {
+        color: var(--graphite);
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-left: 0.4rem;
+      }
+      .card p {
+        margin: 0 0 1.1rem;
+        font-size: 0.93rem;
+        color: var(--graphite);
+      }
 
-.field{
-  display:flex;flex-wrap:wrap;gap:.55rem;
-}
-.field input[type=email]{
-  flex:1 1 11rem;min-width:0;
-  font-family:var(--body);font-size:.95rem;
-  padding:.72rem .8rem;
-  border:1px solid var(--rule);
-  background:#fff;color:var(--ink);
-  border-radius:0;
-}
-.field input[type=email]:focus-visible{
-  outline:2px solid var(--trace);outline-offset:1px;border-color:var(--trace);
-}
-.btn{
-  font-family:var(--mono);
-  font-size:.8rem;font-weight:600;
-  letter-spacing:.07em;text-transform:uppercase;
-  padding:.72rem 1.15rem;
-  border:1px solid var(--ink);
-  background:var(--ink);color:var(--paper);
-  cursor:pointer;border-radius:0;
-  text-decoration:none;display:inline-block;
-  transition:background .16s ease,color .16s ease;
-}
-.btn:hover{background:var(--trace);border-color:var(--trace);}
-.btn:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
-.btn--ghost{background:transparent;color:var(--ink);}
-.btn--ghost:hover{background:var(--ink);color:var(--paper);}
-.fineprint{
-  font-family:var(--mono);font-size:.7rem;
-  color:var(--graphite);margin:.8rem 0 0;line-height:1.55;
-}
+      .field {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+      }
+      .field input[type="email"] {
+        flex: 1 1 11rem;
+        min-width: 0;
+        font-family: var(--body);
+        font-size: 0.95rem;
+        padding: 0.72rem 0.8rem;
+        border: 1px solid var(--rule);
+        background: #fff;
+        color: var(--ink);
+        border-radius: 0;
+      }
+      .field input[type="email"]:focus-visible {
+        outline: 2px solid var(--trace);
+        outline-offset: 1px;
+        border-color: var(--trace);
+      }
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 0.72rem 1.15rem;
+        border: 1px solid var(--ink);
+        background: var(--ink);
+        color: var(--paper);
+        cursor: pointer;
+        border-radius: 0;
+        text-decoration: none;
+        display: inline-block;
+        transition:
+          background 0.16s ease,
+          color 0.16s ease;
+      }
+      .btn:hover {
+        background: var(--trace);
+        border-color: var(--trace);
+      }
+      .btn:focus-visible {
+        outline: 2px solid var(--trace);
+        outline-offset: 2px;
+      }
+      .btn--ghost {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn--ghost:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .fineprint {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--graphite);
+        margin: 0.8rem 0 0;
+        line-height: 1.55;
+      }
 
-/* ---------- plain prose ---------- */
-.prose p{margin:0 0 1rem;}
-.prose p:last-child{margin-bottom:0;}
-.prose strong{font-weight:600;}
+      /* ---------- plain prose ---------- */
+      .prose p {
+        margin: 0 0 1rem;
+      }
+      .prose p:last-child {
+        margin-bottom: 0;
+      }
+      .prose strong {
+        font-weight: 600;
+      }
 
-/* ---------- disclosures ---------- */
-.disc{
-  border-left:2px solid var(--flag);
-  padding-left:1.15rem;
-  margin:0 0 1.4rem;
-}
-.disc:last-child{margin-bottom:0;}
-.disc h3{
-  font-family:var(--body);font-size:1rem;font-weight:600;
-  margin:0 0 .3rem;
-}
-.disc p{margin:0;color:var(--graphite);font-size:.95rem;}
+      /* ---------- disclosures ---------- */
+      .disc {
+        border-left: 2px solid var(--flag);
+        padding-left: 1.15rem;
+        margin: 0 0 1.4rem;
+      }
+      .disc:last-child {
+        margin-bottom: 0;
+      }
+      .disc h3 {
+        font-family: var(--body);
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0 0 0.3rem;
+      }
+      .disc p {
+        margin: 0;
+        color: var(--graphite);
+        font-size: 0.95rem;
+      }
 
-/* ---------- faq ---------- */
-.faq{border-top:1px solid var(--rule);}
-.faq details{border-bottom:1px solid var(--rule);}
-.faq summary{
-  cursor:pointer;list-style:none;
-  padding:1rem 0;
-  font-weight:600;font-size:1rem;
-  display:flex;justify-content:space-between;align-items:center;gap:1rem;
-}
-.faq summary::-webkit-details-marker{display:none;}
-.faq summary::after{
-  content:'+';font-family:var(--mono);color:var(--flag);
-  font-size:1.1rem;line-height:1;flex:none;
-}
-.faq details[open] summary::after{content:'–';}
-.faq summary:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
-.faq details p{
-  margin:0 0 1.1rem;color:var(--graphite);font-size:.95rem;max-width:60ch;
-}
+      /* ---------- faq ---------- */
+      .faq {
+        border-top: 1px solid var(--rule);
+      }
+      .faq details {
+        border-bottom: 1px solid var(--rule);
+      }
+      .faq summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 1rem 0;
+        font-weight: 600;
+        font-size: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq summary::after {
+        content: "+";
+        font-family: var(--mono);
+        color: var(--flag);
+        font-size: 1.1rem;
+        line-height: 1;
+        flex: none;
+      }
+      .faq details[open] summary::after {
+        content: "–";
+      }
+      .faq summary:focus-visible {
+        outline: 2px solid var(--trace);
+        outline-offset: 2px;
+      }
+      .faq details p {
+        margin: 0 0 1.1rem;
+        color: var(--graphite);
+        font-size: 0.95rem;
+        max-width: 60ch;
+      }
 
-/* ---------- footer ---------- */
-.foot{
-  border-top:1px solid var(--ink);
-  padding-block:2rem 3rem;
-  font-family:var(--mono);font-size:.72rem;
-  color:var(--graphite);line-height:1.7;
-}
-.foot a{color:var(--ink);}
+      /* ---------- footer ---------- */
+      .foot {
+        border-top: 1px solid var(--ink);
+        padding-block: 2rem 3rem;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--graphite);
+        line-height: 1.7;
+      }
+      .foot a {
+        color: var(--ink);
+      }
 
-a{color:var(--trace);}
-a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
+      a {
+        color: var(--trace);
+      }
+      a:focus-visible {
+        outline: 2px solid var(--trace);
+        outline-offset: 2px;
+      }
 
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important;}
-}
-</style>
-</head>
-<body>
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <!-- ============ HERO ============ -->
+      <header class="hero">
+        <img
+          class="hero__mark"
+          src="logo.png"
+          alt="Minimum Viable Nutrition"
+          width="44"
+          height="49"
+        />
+        <p class="hero__eyebrow">Notion workspace · available now</p>
+        <h1 class="hero__title">Minimum Viable Nutrition</h1>
+        <p class="hero__sub">
+          A weight-reduction protocol documented like infrastructure — runbooks,
+          telemetry, failure modes, rollback procedures. Built by someone who
+          <strong>doesn't cook</strong>, <strong>eats most meals out</strong>,
+          and <strong>won't tolerate daily tracking</strong>.
+        </p>
 
-<main class="shell">
+        <figure class="chart">
+          <figcaption class="chart__head">
+            <span>Recorded mass · <b>Jan 8 – Aug 21, 2026</b></span>
+            <span>Net <b>−48.0 lbs</b></span>
+            <span>BMI <b>35 → 28.2</b></span>
+          </figcaption>
 
-  <!-- ============ HERO ============ -->
-  <header class="hero">
-    <img class="hero__mark" src="logo.png" alt="Minimum Viable Nutrition" width="44" height="49">
-    <p class="hero__eyebrow">Notion workspace · available now</p>
-    <h1 class="hero__title">Minimum Viable Nutrition</h1>
-    <p class="hero__sub">A weight-reduction protocol documented like infrastructure — runbooks, telemetry, failure modes, rollback procedures. Built by someone who <strong>doesn't cook</strong>, <strong>eats most meals out</strong>, and <strong>won't tolerate daily tracking</strong>.</p>
+          <svg
+            viewBox="0 0 900 330"
+            role="img"
+            aria-label="Line chart of body mass from 246 pounds on January 8 2026 to 195.8 pounds on August 21 2026, with a flagged low outlier of 195.8 on July 10 that coincidentally repeats on August 21, and a flat four-week average of 197.2 through the final eight weeks."
+          >
+            <!-- horizontal grid -->
+            <g id="grid"></g>
+            <!-- four-week average overlay -->
+            <path id="avg" class="avg-line" d=""></path>
+            <!-- main trace -->
+            <path id="trace" class="trace-line" d=""></path>
+            <!-- points -->
+            <g id="pts"></g>
+            <!-- annotations -->
+            <g id="anno"></g>
+          </svg>
 
-    <figure class="chart">
-      <figcaption class="chart__head">
-        <span>Recorded mass · <b>Jan 8 – Aug 21, 2026</b></span>
-        <span>Net <b>−48.0 lbs</b></span>
-        <span>BMI <b>35 → 28.2</b></span>
-      </figcaption>
+          <div class="chart__legend">
+            <span><i></i>Weekly reading</span>
+            <span><i class="dash"></i>Four-week average</span>
+            <span><i class="flag"></i>Flagged outlier</span>
+          </div>
+        </figure>
 
-      <svg viewBox="0 0 900 330" role="img" aria-label="Line chart of body mass from 246 pounds on January 8 2026 to 195.8 pounds on August 21 2026, with a flagged low outlier of 195.8 on July 10 that coincidentally repeats on August 21, and a flat four-week average of 197.2 through the final eight weeks.">
-        <!-- horizontal grid -->
-        <g id="grid"></g>
-        <!-- four-week average overlay -->
-        <path id="avg" class="avg-line" d=""></path>
-        <!-- main trace -->
-        <path id="trace" class="trace-line" d=""></path>
-        <!-- points -->
-        <g id="pts"></g>
-        <!-- annotations -->
-        <g id="anno"></g>
-      </svg>
+        <p class="chart__note">
+          Look at July 10. That 195.8 sits between a 198.4 and a 198.6 — a
+          single low reading, not a milestone. It got logged as an achievement
+          at the time. <b>Low outliers are more dangerous than high ones:</b> a
+          bad number gets scrutinized, a good one gets promoted to your new
+          baseline. On August 21, the exact same number showed up again — a
+          genuine coincidence, not a pattern. The four-week average moved from
+          197.7 to 197.2, real but small. Two more Fridays will say whether this
+          is real. Both readings are in the product, unedited.
+        </p>
+      </header>
 
-      <div class="chart__legend">
-        <span><i></i>Weekly reading</span>
-        <span><i class="dash"></i>Four-week average</span>
-        <span><i class="flag"></i>Flagged outlier</span>
-      </div>
-    </figure>
+      <!-- ============ CLAIMS ============ -->
+      <section class="band">
+        <p class="band__mark">246 → 198 <span>/ what this is</span></p>
+        <h2 class="band__title">Three things that make it different</h2>
+        <div class="claims">
+          <div class="claim">
+            <h3>Built around real constraints</h3>
+            <p>
+              No cooking skill. No calorie logging. No daily rituals. A system
+              that assumes discipline you don't have is a system that's already
+              broken.
+            </p>
+          </div>
+          <div class="claim">
+            <h3>It rates its own claims</h3>
+            <p>
+              Every parameter is marked well-supported, reasonable, or personal
+              preference — with a table telling you which half you can drop and
+              still get most of the result.
+            </p>
+          </div>
+          <div class="claim">
+            <h3>It solves eating out</h3>
+            <p>
+              Roughly half of all meals happen somewhere you don't control. A
+              ninety-second procedure for reading an unfamiliar menu, plus
+              documented verdicts on thirty-odd venues.
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <p class="chart__note">Look at July 10. That 195.8 sits between a 198.4 and a 198.6 — a single low reading, not a milestone. It got logged as an achievement at the time. <b>Low outliers are more dangerous than high ones:</b> a bad number gets scrutinized, a good one gets promoted to your new baseline. On August 21, the exact same number showed up again — a genuine coincidence, not a pattern. The four-week average moved from 197.7 to 197.2, real but small. Two more Fridays will say whether this is real. Both readings are in the product, unedited.</p>
-  </header>
+      <!-- ============ MODULES ============ -->
+      <section class="band">
+        <p class="band__mark">8 modules <span>/ what's inside</span></p>
+        <h2 class="band__title">The workspace</h2>
+        <dl class="mods">
+          <div class="mod">
+            <dt>Boot Sequence</dt>
+            <dd>
+              The origin, the full unedited telemetry, and how to establish your
+              own baseline.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Core Config</dt>
+            <dd>
+              The protocol parameters, each with a confidence rating and an
+              honest note on what the evidence supports.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Inventory</dt>
+            <dd>
+              A live database of what's in your kitchen, linked to the recipe
+              library — so meal selection becomes a lookup, not a decision.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Component Library</dt>
+            <dd>
+              45 recipes as modular assembly, named so you can scan the whole
+              list in fifteen seconds.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Field Operations</dt>
+            <dd>
+              The largest module. Menu-reading procedure, restaurant and grocery
+              verdicts, playbooks for conferences, catered dinners, and travel.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Telemetry</dt>
+            <dd>
+              The weekly cadence, the dashboard schema, and how to read a trend
+              line that isn't monotonic.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Deployment Cadence</dt>
+            <dd>
+              Three review loops with separate authority, so you stop changing a
+              working protocol in response to noise.
+            </dd>
+          </div>
+          <div class="mod">
+            <dt>Rollback Procedures</dt>
+            <dd>
+              Failure taxonomy, plateau audit, and how to resume after stopping
+              for three months.
+            </dd>
+          </div>
+        </dl>
+      </section>
 
-  <!-- ============ CLAIMS ============ -->
-  <section class="band">
-    <p class="band__mark">246 → 198 <span>/ what this is</span></p>
-    <h2 class="band__title">Three things that make it different</h2>
-    <div class="claims">
-      <div class="claim">
-        <h3>Built around real constraints</h3>
-        <p>No cooking skill. No calorie logging. No daily rituals. A system that assumes discipline you don't have is a system that's already broken.</p>
-      </div>
-      <div class="claim">
-        <h3>It rates its own claims</h3>
-        <p>Every parameter is marked well-supported, reasonable, or personal preference — with a table telling you which half you can drop and still get most of the result.</p>
-      </div>
-      <div class="claim">
-        <h3>It solves eating out</h3>
-        <p>Roughly half of all meals happen somewhere you don't control. A ninety-second procedure for reading an unfamiliar menu, plus documented verdicts on thirty-odd venues.</p>
-      </div>
-    </div>
-  </section>
+      <!-- ============ VIDEO ============ -->
+      <section class="band">
+        <p class="band__mark">Watch <span>/ see it working</span></p>
+        <h2 class="band__title">Not a pitch deck. The real thing.</h2>
+        <div class="col">
+          <div
+            style="
+              position: relative;
+              padding-bottom: 56.25%;
+              height: 0;
+              border: 1px solid var(--ink);
+              background: var(--paper-2);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <p style="margin: 0; padding: 1rem; text-align: center">
+              Walkthrough video coming soon.
+            </p>
+          </div>
+        </div>
+      </section>
 
-  <!-- ============ MODULES ============ -->
-  <section class="band">
-    <p class="band__mark">8 modules <span>/ what's inside</span></p>
-    <h2 class="band__title">The workspace</h2>
-    <dl class="mods">
-      <div class="mod"><dt>Boot Sequence</dt><dd>The origin, the full unedited telemetry, and how to establish your own baseline.</dd></div>
-      <div class="mod"><dt>Core Config</dt><dd>The protocol parameters, each with a confidence rating and an honest note on what the evidence supports.</dd></div>
-      <div class="mod"><dt>Inventory</dt><dd>A live database of what's in your kitchen, linked to the recipe library — so meal selection becomes a lookup, not a decision.</dd></div>
-      <div class="mod"><dt>Component Library</dt><dd>45 recipes as modular assembly, named so you can scan the whole list in fifteen seconds.</dd></div>
-      <div class="mod"><dt>Field Operations</dt><dd>The largest module. Menu-reading procedure, restaurant and grocery verdicts, playbooks for conferences, catered dinners, and travel.</dd></div>
-      <div class="mod"><dt>Telemetry</dt><dd>The weekly cadence, the dashboard schema, and how to read a trend line that isn't monotonic.</dd></div>
-      <div class="mod"><dt>Deployment Cadence</dt><dd>Three review loops with separate authority, so you stop changing a working protocol in response to noise.</dd></div>
-      <div class="mod"><dt>Rollback Procedures</dt><dd>Failure taxonomy, plateau audit, and how to resume after stopping for three months.</dd></div>
-    </dl>
-  </section>
+      <!-- ============ OFFER ============ -->
+      <section class="band" id="join">
+        <p class="band__mark">$49 <span>/ getting it</span></p>
+        <h2 class="band__title">Available now</h2>
 
-  <!-- ============ VIDEO ============ -->
-  <section class="band">
-    <p class="band__mark">Watch <span>/ see it working</span></p>
-    <h2 class="band__title">Not a pitch deck. The real thing.</h2>
-    <div class="col">
-      <div style="position:relative;padding-bottom:56.25%;height:0;border:1px solid var(--ink);background:var(--paper-2);">
-        <iframe src="https://www.youtube.com/embed/Nd59My6_pC8" title="Minimum Viable Nutrition — product walkthrough" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
+        <div class="offer">
+          <div class="card">
+            <p class="card__tag">Full Workspace</p>
+            <p class="card__price">$49</p>
+            <p>
+              Instant delivery — click purchase, get a link, click Duplicate,
+              and it's your own fully editable copy. Nothing shared back,
+              nothing dependent on my account staying accessible.
+            </p>
+            <a
+              class="btn"
+              href="https://mvn.lemonsqueezy.com/checkout/buy/3f421d20-01f3-49b0-aec0-07ae5eeaffc7"
+              >Buy Now — $49</a
+            >
+            <p class="fineprint">
+              One-time purchase. An optional $7/mo tier is available after
+              purchase for quarterly content refreshes — never required.
+            </p>
+          </div>
 
-  <!-- ============ OFFER ============ -->
-  <section class="band" id="join">
-    <p class="band__mark">$49 <span>/ getting it</span></p>
-    <h2 class="band__title">Available now</h2>
+          <div class="card card--quiet">
+            <p class="card__tag">Free Waitlist</p>
+            <p class="card__price">Free</p>
+            <p>
+              Not ready to buy yet? Join the list — it's also where I'll publish
+              the follow-up sleep study results when they come back, better,
+              unremarkable, or unchanged.
+            </p>
 
-    <div class="offer">
-      <div class="card">
-        <p class="card__tag">Full Workspace</p>
-        <p class="card__price">$49</p>
-        <p>Instant delivery — click purchase, get a link, click Duplicate, and it's your own fully editable copy. Nothing shared back, nothing dependent on my account staying accessible.</p>
-        <a class="btn" href="https://mvn.lemonsqueezy.com/checkout/buy/3f421d20-01f3-49b0-aec0-07ae5eeaffc7">Buy Now — $49</a>
-        <p class="fineprint">One-time purchase. An optional $7/mo tier is available after purchase for quarterly content refreshes — never required.</p>
-      </div>
+            <form
+              class="field"
+              action="https://app.kit.com/forms/9810307/subscriptions"
+              method="post"
+            >
+              <label
+                for="email"
+                style="
+                  position: absolute;
+                  width: 1px;
+                  height: 1px;
+                  overflow: hidden;
+                  clip: rect(0 0 0 0);
+                "
+                >Email address</label
+              >
+              <input
+                id="email"
+                type="email"
+                name="email_address"
+                placeholder="you@domain.com"
+                required
+                autocomplete="email"
+              />
+              <button class="btn btn--ghost" type="submit">Get notified</button>
+            </form>
+            <p class="fineprint">
+              No spam. The list exists to share the results and nothing else.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      <div class="card card--quiet">
-        <p class="card__tag">Free Waitlist</p>
-        <p class="card__price">Free</p>
-        <p>Not ready to buy yet? Join the list — it's also where I'll publish the follow-up sleep study results when they come back, better, unremarkable, or unchanged.</p>
+      <!-- ============ WHAT YOU'RE BUYING ============ -->
+      <section class="band">
+        <p class="band__mark">Scope <span>/ plainly</span></p>
+        <h2 class="band__title">What you're actually buying</h2>
+        <div class="col prose">
+          <p>
+            A well-organized Notion workspace containing one person's documented
+            protocol, the reasoning behind it, and a decision procedure for
+            eating outside your own kitchen.
+          </p>
+          <p>
+            <strong>Not</strong> a coaching program. <strong>Not</strong> a
+            community. <strong>Not</strong> an app. There's no check-in, no
+            accountability partner, and nothing requiring my ongoing attention —
+            that's deliberate, and it's why it costs $49 instead of $200 a
+            month.
+          </p>
+          <p>
+            If you want someone in your corner, this is the wrong product and
+            you should buy something else.
+          </p>
+        </div>
+      </section>
 
-        <form class="field" action="https://app.kit.com/forms/9810307/subscriptions" method="post">
-          <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
-          <input id="email" type="email" name="email_address" placeholder="you@domain.com" required autocomplete="email">
-          <button class="btn btn--ghost" type="submit">Get notified</button>
-        </form>
-        <p class="fineprint">No spam. The list exists to share the results and nothing else.</p>
-      </div>
-    </div>
-  </section>
+      <!-- ============ DISCLOSURES ============ -->
+      <section class="band">
+        <p class="band__mark">AHI 39.49 <span>/ read before buying</span></p>
+        <h2 class="band__title">Honest disclosures</h2>
+        <div class="col">
+          <div class="disc">
+            <h3>I was on CPAP the entire time.</h3>
+            <p>
+              Prescribed after my baseline sleep study. Any improvement in my
+              apnea can't be cleanly attributed to weight loss — two
+              interventions ran concurrently. This is not a way to avoid the
+              machine.
+            </p>
+          </div>
+          <div class="disc">
+            <h3>I don't have post-protocol clinical results yet.</h3>
+            <p>
+              The follow-up study is pending. When it returns — better,
+              unremarkable, or unchanged — it gets published unedited.
+            </p>
+          </div>
+          <div class="disc">
+            <h3>This is a case study, not a prescription.</h3>
+            <p>
+              It was engineered for one person with one diagnosis. The
+              architecture adapts. The specific parameters are mine.
+            </p>
+          </div>
+          <div class="disc">
+            <h3>It isn't appropriate for everyone.</h3>
+            <p>
+              If you're pregnant or nursing, have a history of disordered
+              eating, manage type 1 diabetes, or are under 18 — this isn't for
+              you, and I'd rather say so than take your money. The fasting
+              component in particular can require medication adjustment. Talk to
+              your doctor first.
+            </p>
+          </div>
+        </div>
+      </section>
 
-  <!-- ============ WHAT YOU'RE BUYING ============ -->
-  <section class="band">
-    <p class="band__mark">Scope <span>/ plainly</span></p>
-    <h2 class="band__title">What you're actually buying</h2>
-    <div class="col prose">
-      <p>A well-organized Notion workspace containing one person's documented protocol, the reasoning behind it, and a decision procedure for eating outside your own kitchen.</p>
-      <p><strong>Not</strong> a coaching program. <strong>Not</strong> a community. <strong>Not</strong> an app. There's no check-in, no accountability partner, and nothing requiring my ongoing attention — that's deliberate, and it's why it costs $49 instead of $200 a month.</p>
-      <p>If you want someone in your corner, this is the wrong product and you should buy something else.</p>
-    </div>
-  </section>
+      <!-- ============ FAQ ============ -->
+      <section class="band">
+        <p class="band__mark">FAQ <span>/ questions</span></p>
+        <h2 class="band__title">Before you ask</h2>
+        <div class="faq col">
+          <details>
+            <summary>How fast do I actually get it?</summary>
+            <p>
+              Under a minute. Click purchase, a link arrives, click Duplicate,
+              pick a workspace — that's it. No waiting, no manual step on my
+              end.
+            </p>
+          </details>
+          <details>
+            <summary>Do I need to be technical?</summary>
+            <p>
+              No. The vocabulary is engineering-flavored — runbooks, telemetry,
+              failure modes — but nothing requires a technical background. If
+              you're comfortable with a spreadsheet, you're fine.
+            </p>
+          </details>
+          <details>
+            <summary>What if I don't cook?</summary>
+            <p>
+              That's the design constraint the whole thing was built around.
+              Every recipe is assembly rather than cooking, and the largest
+              module is about eating in places you don't control.
+            </p>
+          </details>
+          <details>
+            <summary>Does "Cook Tonight" instantly know what I have?</summary>
+            <p>
+              Not on day one, and I'd rather say so than let you find out the
+              hard way. It filters recipes to what's actually in your kitchen,
+              but that requires linking each recipe to its ingredients — which
+              happens naturally the first time you cook it, not automatically
+              the moment you buy the workspace. Link a handful of recipes
+              through real use over a few weeks and it gets genuinely useful.
+              Trying to link all 45 upfront is a chore nobody should do.
+            </p>
+          </details>
+          <details>
+            <summary>What's the $7/month tier?</summary>
+            <p>
+              Optional, offered after purchase, never required. Quarterly
+              refreshes: new restaurant verdicts, seasonal menu re-audits, new
+              recipe modules. The core workspace is complete without it.
+            </p>
+          </details>
+          <details>
+            <summary>Wasn't this waitlist-only for a while?</summary>
+            <p>
+              Yes — briefly. Payment processors won't approve checkout for a
+              product that isn't finished, and they're right to be cautious
+              about that. The workspace is finished now, checkout is live, and
+              this page reflects that.
+            </p>
+          </details>
+          <details>
+            <summary>Will this cure my sleep apnea?</summary>
+            <p>
+              No, and be skeptical of anything claiming otherwise. Weight loss
+              reduces AHI in the clinical literature, but it's not a fixed
+              exchange rate, it doesn't work identically for everyone, and it
+              doesn't reliably eliminate apnea on its own. It's an adjunct to
+              treatment — not a replacement for your sleep physician or your
+              CPAP.
+            </p>
+          </details>
+        </div>
+      </section>
 
-  <!-- ============ DISCLOSURES ============ -->
-  <section class="band">
-    <p class="band__mark">AHI 39.49 <span>/ read before buying</span></p>
-    <h2 class="band__title">Honest disclosures</h2>
-    <div class="col">
-      <div class="disc">
-        <h3>I was on CPAP the entire time.</h3>
-        <p>Prescribed after my baseline sleep study. Any improvement in my apnea can't be cleanly attributed to weight loss — two interventions ran concurrently. This is not a way to avoid the machine.</p>
-      </div>
-      <div class="disc">
-        <h3>I don't have post-protocol clinical results yet.</h3>
-        <p>The follow-up study is pending. When it returns — better, unremarkable, or unchanged — it gets published unedited.</p>
-      </div>
-      <div class="disc">
-        <h3>This is a case study, not a prescription.</h3>
-        <p>It was engineered for one person with one diagnosis. The architecture adapts. The specific parameters are mine.</p>
-      </div>
-      <div class="disc">
-        <h3>It isn't appropriate for everyone.</h3>
-        <p>If you're pregnant or nursing, have a history of disordered eating, manage type 1 diabetes, or are under 18 — this isn't for you, and I'd rather say so than take your money. The fasting component in particular can require medication adjustment. Talk to your doctor first.</p>
-      </div>
-    </div>
-  </section>
+      <footer class="foot">
+        <p>
+          Minimum Viable Nutrition · a project by KyTech<br />
+          Not medical or nutritional advice. Talk to your doctor before changing
+          your diet significantly.<br />
+          <a href="/terms.html">Terms of Use</a> ·
+          <a href="/privacy.html">Privacy Policy</a>
+        </p>
+      </footer>
+    </main>
 
-  <!-- ============ FAQ ============ -->
-  <section class="band">
-    <p class="band__mark">FAQ <span>/ questions</span></p>
-    <h2 class="band__title">Before you ask</h2>
-    <div class="faq col">
-      <details><summary>How fast do I actually get it?</summary><p>Under a minute. Click purchase, a link arrives, click Duplicate, pick a workspace — that's it. No waiting, no manual step on my end.</p></details>
-      <details><summary>Do I need to be technical?</summary><p>No. The vocabulary is engineering-flavored — runbooks, telemetry, failure modes — but nothing requires a technical background. If you're comfortable with a spreadsheet, you're fine.</p></details>
-      <details><summary>What if I don't cook?</summary><p>That's the design constraint the whole thing was built around. Every recipe is assembly rather than cooking, and the largest module is about eating in places you don't control.</p></details>
-      <details><summary>Does "Cook Tonight" instantly know what I have?</summary><p>Not on day one, and I'd rather say so than let you find out the hard way. It filters recipes to what's actually in your kitchen, but that requires linking each recipe to its ingredients — which happens naturally the first time you cook it, not automatically the moment you buy the workspace. Link a handful of recipes through real use over a few weeks and it gets genuinely useful. Trying to link all 45 upfront is a chore nobody should do.</p></details>
-      <details><summary>What's the $7/month tier?</summary><p>Optional, offered after purchase, never required. Quarterly refreshes: new restaurant verdicts, seasonal menu re-audits, new recipe modules. The core workspace is complete without it.</p></details>
-      <details><summary>Wasn't this waitlist-only for a while?</summary><p>Yes — briefly. Payment processors won't approve checkout for a product that isn't finished, and they're right to be cautious about that. The workspace is finished now, checkout is live, and this page reflects that.</p></details>
-      <details><summary>Will this cure my sleep apnea?</summary><p>No, and be skeptical of anything claiming otherwise. Weight loss reduces AHI in the clinical literature, but it's not a fixed exchange rate, it doesn't work identically for everyone, and it doesn't reliably eliminate apnea on its own. It's an adjunct to treatment — not a replacement for your sleep physician or your CPAP.</p></details>
-    </div>
-  </section>
+    <script>
+      (function () {
+        // ---- data: [days since Jan 8 2026, lbs, label] ----
+        var D = [
+          [0, 246.0, "Jan 8"],
+          [9, 241.6, "Jan 17"],
+          [110, 213.4, "Apr 28"],
+          [117, 208.4, "May 5"],
+          [130, 207.6, "May 18"],
+          [145, 205.2, "Jun 2"],
+          [159, 204.0, "Jun 16"],
+          [161, 201.7, "Jun 18"],
+          [174, 198.4, "Jul 1"],
+          [183, 195.8, "Jul 10"],
+          [190, 198.6, "Jul 17"],
+          [197, 198.0, "Jul 24"],
+          [211, 197.0, "Aug 7"],
+          [218, 198.0, "Aug 14"],
+          [225, 195.8, "Aug 21"],
+        ];
 
-  <footer class="foot">
-    <p>Minimum Viable Nutrition · a project by KyTech<br>
-    Not medical or nutritional advice. Talk to your doctor before changing your diet significantly.<br>
-    <a href="/terms.html">Terms of Use</a> · <a href="/privacy.html">Privacy Policy</a></p>
-  </footer>
+        var W = 900,
+          H = 330,
+          L = 46,
+          R = 104,
+          T = 18,
+          B = 34;
+        var xMin = 0,
+          xMax = 225,
+          yMin = 192,
+          yMax = 250;
 
-</main>
+        function X(d) {
+          return L + ((d - xMin) / (xMax - xMin)) * (W - L - R);
+        }
+        function Y(v) {
+          return T + ((yMax - v) / (yMax - yMin)) * (H - T - B);
+        }
 
-<script>
-(function(){
-  // ---- data: [days since Jan 8 2026, lbs, label] ----
-  var D = [
-    [0,   246.0, 'Jan 8'],
-    [9,   241.6, 'Jan 17'],
-    [110, 213.4, 'Apr 28'],
-    [117, 208.4, 'May 5'],
-    [130, 207.6, 'May 18'],
-    [145, 205.2, 'Jun 2'],
-    [159, 204.0, 'Jun 16'],
-    [161, 201.7, 'Jun 18'],
-    [174, 198.4, 'Jul 1'],
-    [183, 195.8, 'Jul 10'],
-    [190, 198.6, 'Jul 17'],
-    [197, 198.0, 'Jul 24'],
-    [211, 197.0, 'Aug 7'],
-    [218, 198.0, 'Aug 14'],
-    [225, 195.8, 'Aug 21']
-  ];
+        var ns = "http://www.w3.org/2000/svg";
+        function el(n, a) {
+          var e = document.createElementNS(ns, n);
+          for (var k in a) e.setAttribute(k, a[k]);
+          return e;
+        }
 
-  var W=900, H=330, L=46, R=104, T=18, B=34;
-  var xMin=0, xMax=225, yMin=192, yMax=250;
+        // grid + y labels
+        var grid = document.getElementById("grid");
+        [200, 210, 220, 230, 240, 250].forEach(function (v) {
+          grid.appendChild(
+            el("line", {
+              x1: L,
+              y1: Y(v),
+              x2: W - R,
+              y2: Y(v),
+              class: "grid-line",
+            }),
+          );
+          var t = el("text", {
+            x: L - 9,
+            y: Y(v) + 4,
+            class: "axis-label",
+            "text-anchor": "end",
+          });
+          t.textContent = v;
+          grid.appendChild(t);
+        });
+        // x labels
+        [
+          [0, "JAN"],
+          [54, "MAR"],
+          [110, "APR"],
+          [145, "JUN"],
+          [221, "AUG"],
+        ].forEach(function (p) {
+          var t = el("text", {
+            x: X(p[0]),
+            y: H - 10,
+            class: "axis-label",
+            "text-anchor": "middle",
+          });
+          t.textContent = p[1];
+          grid.appendChild(t);
+        });
 
-  function X(d){ return L + (d - xMin)/(xMax-xMin) * (W-L-R); }
-  function Y(v){ return T + (yMax - v)/(yMax-yMin) * (H-T-B); }
+        // trace path
+        var d = D.map(function (p, i) {
+          return (
+            (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)
+          );
+        }).join(" ");
+        var trace = document.getElementById("trace");
+        trace.setAttribute("d", d);
 
-  var ns='http://www.w3.org/2000/svg';
-  function el(n,a){ var e=document.createElementNS(ns,n); for(var k in a) e.setAttribute(k,a[k]); return e; }
+        // four-week rolling average over final stretch
+        var avgPts = [];
+        for (var i = 3; i < D.length; i++) {
+          var m = (D[i][1] + D[i - 1][1] + D[i - 2][1] + D[i - 3][1]) / 4;
+          avgPts.push([D[i][0], m]);
+        }
+        document.getElementById("avg").setAttribute(
+          "d",
+          avgPts
+            .map(function (p, i) {
+              return (
+                (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)
+              );
+            })
+            .join(" "),
+        );
 
-  // grid + y labels
-  var grid=document.getElementById('grid');
-  [200,210,220,230,240,250].forEach(function(v){
-    grid.appendChild(el('line',{x1:L,y1:Y(v),x2:W-R,y2:Y(v),'class':'grid-line'}));
-    var t=el('text',{x:L-9,y:Y(v)+4,'class':'axis-label','text-anchor':'end'});
-    t.textContent=v; grid.appendChild(t);
-  });
-  // x labels
-  [[0,'JAN'],[54,'MAR'],[110,'APR'],[145,'JUN'],[221,'AUG']].forEach(function(p){
-    var t=el('text',{x:X(p[0]),y:H-10,'class':'axis-label','text-anchor':'middle'});
-    t.textContent=p[1]; grid.appendChild(t);
-  });
+        // points
+        var pts = document.getElementById("pts");
+        D.forEach(function (p) {
+          var flag = p[2] === "Jul 10" || p[2] === "Aug 21";
+          var c = el("circle", {
+            cx: X(p[0]),
+            cy: Y(p[1]),
+            r: flag ? 4.5 : 3.2,
+            class: "pt" + (flag ? " pt--flag" : ""),
+          });
+          var ttl = el("title");
+          ttl.textContent = p[2] + " — " + p[1].toFixed(1) + " lbs";
+          c.appendChild(ttl);
+          pts.appendChild(c);
+        });
 
-  // trace path
-  var d = D.map(function(p,i){ return (i?'L':'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join(' ');
-  var trace=document.getElementById('trace');
-  trace.setAttribute('d', d);
+        // annotations
+        var an = document.getElementById("anno");
+        // start
+        var s1 = el("text", {
+          x: X(0) + 9,
+          y: Y(246) - 9,
+          class: "anno anno--quiet",
+        });
+        s1.textContent = "246.0 · sleep study";
+        an.appendChild(s1);
+        // outlier
+        an.appendChild(
+          el("line", {
+            x1: X(183),
+            y1: Y(195.8) + 8,
+            x2: X(183),
+            y2: Y(195.8) + 30,
+            class: "anno-rule",
+          }),
+        );
+        var s2 = el("text", {
+          x: X(183) - 4,
+          y: Y(195.8) + 43,
+          class: "anno",
+          "text-anchor": "middle",
+        });
+        s2.textContent = "195.8";
+        an.appendChild(s2);
+        var s3 = el("text", {
+          x: X(183) - 4,
+          y: Y(195.8) + 56,
+          class: "anno",
+          "text-anchor": "middle",
+        });
+        s3.textContent = "low outlier";
+        an.appendChild(s3);
+        // flat stretch
+        an.appendChild(
+          el("line", {
+            x1: X(190),
+            y1: Y(197.2),
+            x2: W - R + 14,
+            y2: Y(197.2),
+            class: "grid-line",
+          }),
+        );
+        var s4 = el("text", {
+          x: W - R + 20,
+          y: Y(197.2) - 6,
+          class: "anno anno--quiet",
+        });
+        s4.textContent = "197.2 avg";
+        an.appendChild(s4);
+        var s5 = el("text", {
+          x: W - R + 20,
+          y: Y(197.2) + 9,
+          class: "anno anno--quiet",
+        });
+        s5.textContent = "watching";
+        an.appendChild(s5);
 
-  // four-week rolling average over final stretch
-  var avgPts=[];
-  for(var i=3;i<D.length;i++){
-    var m=(D[i][1]+D[i-1][1]+D[i-2][1]+D[i-3][1])/4;
-    avgPts.push([D[i][0],m]);
-  }
-  document.getElementById('avg').setAttribute('d',
-    avgPts.map(function(p,i){ return (i?'L':'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join(' '));
+        // draw-on animation
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && trace.getTotalLength) {
+          var len = trace.getTotalLength();
+          trace.style.strokeDasharray = len + " " + len;
+          trace.style.strokeDashoffset = len;
+          trace.getBoundingClientRect();
+          trace.style.transition =
+            "stroke-dashoffset 1500ms cubic-bezier(.4,0,.2,1)";
+          trace.style.strokeDashoffset = "0";
 
-  // points
-  var pts=document.getElementById('pts');
-  D.forEach(function(p){
-    var flag = (p[2]==='Jul 10' || p[2]==='Aug 21');
-    var c=el('circle',{cx:X(p[0]),cy:Y(p[1]),r:flag?4.5:3.2,'class':'pt'+(flag?' pt--flag':'')});
-    var ttl=el('title'); ttl.textContent=p[2]+' — '+p[1].toFixed(1)+' lbs';
-    c.appendChild(ttl); pts.appendChild(c);
-  });
-
-  // annotations
-  var an=document.getElementById('anno');
-  // start
-  var s1=el('text',{x:X(0)+9,y:Y(246)-9,'class':'anno anno--quiet'}); s1.textContent='246.0 · sleep study'; an.appendChild(s1);
-  // outlier
-  an.appendChild(el('line',{x1:X(183),y1:Y(195.8)+8,x2:X(183),y2:Y(195.8)+30,'class':'anno-rule'}));
-  var s2=el('text',{x:X(183)-4,y:Y(195.8)+43,'class':'anno','text-anchor':'middle'}); s2.textContent='195.8'; an.appendChild(s2);
-  var s3=el('text',{x:X(183)-4,y:Y(195.8)+56,'class':'anno','text-anchor':'middle'}); s3.textContent='low outlier'; an.appendChild(s3);
-  // flat stretch
-  an.appendChild(el('line',{x1:X(190),y1:Y(197.2),x2:W-R+14,y2:Y(197.2),'class':'grid-line'}));
-  var s4=el('text',{x:W-R+20,y:Y(197.2)-6,'class':'anno anno--quiet'}); s4.textContent='197.2 avg'; an.appendChild(s4);
-  var s5=el('text',{x:W-R+20,y:Y(197.2)+9,'class':'anno anno--quiet'}); s5.textContent='watching'; an.appendChild(s5);
-
-  // draw-on animation
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reduce && trace.getTotalLength){
-    var len=trace.getTotalLength();
-    trace.style.strokeDasharray=len+' '+len;
-    trace.style.strokeDashoffset=len;
-    trace.getBoundingClientRect();
-    trace.style.transition='stroke-dashoffset 1500ms cubic-bezier(.4,0,.2,1)';
-    trace.style.strokeDashoffset='0';
-
-    pts.style.opacity='0';
-    an.style.opacity='0';
-    setTimeout(function(){
-      pts.style.transition='opacity 500ms ease';
-      an.style.transition='opacity 500ms ease';
-      pts.style.opacity='1';
-      an.style.opacity='1';
-    }, 1250);
-  }
-})();
-</script>
-</body>
+          pts.style.opacity = "0";
+          an.style.opacity = "0";
+          setTimeout(function () {
+            pts.style.transition = "opacity 500ms ease";
+            an.style.transition = "opacity 500ms ease";
+            pts.style.opacity = "1";
+            an.style.opacity = "1";
+          }, 1250);
+        }
+      })();
+    </script>
+  </body>
 </html>
