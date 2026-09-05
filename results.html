@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Severe Sleep Apnea to Normal, Off CPAP — The Follow-Up Study · Minimum Viable Nutrition</title>
+<meta name="description" content="Baseline AHI 39.49 (severe) to 4.6 off CPAP, eight months later, after ~48 lbs of weight loss. The full before/after home sleep study, with every caveat named — CPAP confound, n=1, the REM number, one night of data.">
+<meta property="og:title" content="Severe Sleep Apnea to Normal, Off CPAP: One Person's Follow-Up Study">
+<meta property="og:description" content="Baseline AHI 39.49 (severe) to 4.6 off CPAP after ~48 lbs. Numbers first, then everything wrong with them.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE8;
+  --paper-2:#DFE2DE;
+  --ink:#14181A;
+  --graphite:#5C6469;
+  --trace:#1F5F5B;
+  --flag:#A6421C;
+  --rule:#C7CBC6;
+
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --measure:34rem;
+  --gutter:clamp(1.25rem,5vw,3rem);
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- shared shell ---------- */
+.shell{
+  max-width:76rem;
+  margin:0 auto;
+  padding-inline:var(--gutter);
+}
+.col{max-width:var(--measure);}
+
+/* ---------- section marker ---------- */
+.band{
+  border-top:1px solid var(--rule);
+  padding-block:clamp(2.4rem,6vw,4rem);
+}
+.band:first-of-type{border-top:0;}
+.band__mark{
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--flag);
+  margin:0 0 .35rem;
+}
+.band__mark span{color:var(--graphite);}
+.band__title{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(1.6rem,3.4vw,2.4rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  margin:0 0 1.5rem;
+  max-width:26ch;
+}
+
+/* ---------- masthead / breadcrumb ---------- */
+.masthead{
+  padding-block:1.6rem .2rem;
+}
+.masthead a{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--graphite);
+  text-decoration:none;
+}
+.masthead a:hover{color:var(--trace);}
+.masthead img{width:36px;height:auto;display:block;margin-bottom:.9rem;}
+
+/* ---------- article hero ---------- */
+.ahero{padding-block:clamp(1.6rem,4vw,2.6rem) clamp(1.6rem,4vw,2.4rem);}
+.ahero__eyebrow{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--graphite);
+  margin:0 0 1.2rem;
+}
+.ahero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1.02;
+  letter-spacing:-.03em;
+  margin:0 0 1.1rem;
+  max-width:20ch;
+}
+.ahero__standfirst{
+  font-size:clamp(1.02rem,1.6vw,1.18rem);
+  color:var(--graphite);
+  margin:0;
+  max-width:44ch;
+  font-style:italic;
+}
+
+/* ---------- headline stat ---------- */
+.headstat{
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--rule);
+  padding-block:1.6rem;
+  margin:0;
+}
+.headstat p{
+  margin:0;
+  font-size:clamp(1.1rem,2vw,1.35rem);
+  line-height:1.4;
+  max-width:40ch;
+}
+.headstat b{
+  font-family:var(--display);
+  font-weight:800;
+  color:var(--trace);
+  letter-spacing:-.01em;
+}
+
+/* ---------- prose ---------- */
+.prose p{margin:0 0 1rem;}
+.prose p:last-child{margin-bottom:0;}
+.prose strong{font-weight:600;}
+.prose em{font-style:italic;}
+
+/* ---------- comparison metrics ---------- */
+.metrics{
+  border-top:1px solid var(--ink);
+  margin:0 0 1.4rem;
+}
+.metric{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:.2rem 1.4rem;
+  align-items:baseline;
+  padding-block:.85rem;
+  border-bottom:1px solid var(--rule);
+}
+.metric__name{
+  font-weight:600;
+  font-size:.98rem;
+  grid-column:1 / -1;
+}
+.metric__name span{
+  display:block;
+  font-family:var(--body);
+  font-weight:400;
+  font-size:.86rem;
+  color:var(--graphite);
+  font-style:italic;
+}
+.metric__pair{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:baseline;
+  gap:.7rem;
+  font-family:var(--mono);
+}
+.metric__from{color:var(--graphite);font-size:1rem;}
+.metric__arrow{color:var(--graphite);font-size:.9rem;}
+.metric__to{
+  color:var(--trace);
+  font-weight:600;
+  font-size:1.15rem;
+}
+.metrics__caption{
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--graphite);
+  display:flex;
+  justify-content:space-between;
+  padding:.7rem 0 .9rem;
+}
+
+.impression{
+  border-left:2px solid var(--trace);
+  padding-left:1.15rem;
+  margin:1.4rem 0 0;
+  font-size:1rem;
+}
+.impression span{
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--graphite);
+  display:block;
+  margin-bottom:.35rem;
+}
+.impression em{font-style:italic;color:var(--ink);}
+
+/* ---------- caveats ---------- */
+.disc{
+  border-left:2px solid var(--flag);
+  padding-left:1.15rem;
+  margin:0 0 1.4rem;
+}
+.disc:last-child{margin-bottom:0;}
+.disc h3{
+  font-family:var(--body);font-size:1rem;font-weight:600;
+  margin:0 0 .35rem;
+}
+.disc p{margin:0;color:var(--graphite);font-size:.95rem;}
+.disc em{font-style:italic;}
+
+/* ---------- warning callout ---------- */
+.warn{
+  border:1px solid var(--flag);
+  padding:1.2rem 1.3rem;
+  margin:0 0 1.2rem;
+  background:var(--paper-2);
+}
+.warn p{margin:0 0 .8rem;font-size:.97rem;}
+.warn p:last-child{margin-bottom:0;}
+.warn strong{font-weight:600;color:var(--flag);}
+
+/* ---------- cta ---------- */
+.cta{
+  border:1px solid var(--ink);
+  padding:1.7rem 1.5rem;
+  max-width:38rem;
+}
+.cta p{margin:0 0 1.1rem;font-size:.98rem;color:var(--graphite);}
+.cta p strong{color:var(--ink);font-weight:600;}
+.btn{
+  font-family:var(--mono);
+  font-size:.8rem;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:.72rem 1.15rem;
+  border:1px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  cursor:pointer;border-radius:0;
+  text-decoration:none;display:inline-block;
+  transition:background .16s ease,color .16s ease;
+}
+.btn:hover{background:var(--trace);border-color:var(--trace);}
+.btn:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
+
+/* ---------- footer ---------- */
+.foot{
+  border-top:1px solid var(--ink);
+  padding-block:2rem 3rem;
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--graphite);line-height:1.7;
+}
+.foot a{color:var(--ink);}
+
+a{color:var(--trace);}
+a:focus-visible{outline:2px solid var(--trace);outline-offset:2px;}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+}
+</style>
+</head>
+<body>
+
+<main class="shell">
+
+  <!-- ============ MASTHEAD ============ -->
+  <div class="masthead">
+    <a href="/index.html">← Minimum Viable Nutrition</a>
+  </div>
+
+  <!-- ============ ARTICLE HERO ============ -->
+  <header class="ahero">
+    <p class="ahero__eyebrow">Follow-up study · n=1 case report</p>
+    <h1>Severe Sleep Apnea to Normal, Off CPAP</h1>
+    <p class="ahero__standfirst">A weight-reduction case study, and the second sleep study that tells me whether it mattered. Numbers first, then everything I can find wrong with them.</p>
+  </header>
+
+  <!-- ============ HEADLINE STAT ============ -->
+  <div class="headstat">
+    <p>Baseline AHI (3%): 39.49 — severe. Follow-up, eight months later, off CPAP: <b>4.6.</b></p>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <section class="band">
+    <div class="col prose">
+      <p>I'll spend the rest of this explaining why that number is real, what it does and doesn't prove, and the parts of it that aren't as clean as the headline. But the headline is the headline, so here it is up front.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW I GOT HERE ============ -->
+  <section class="band">
+    <p class="band__mark">Context <span>/ the short version</span></p>
+    <h2 class="band__title">How I got here</h2>
+    <div class="col prose">
+      <p>I've spent close to thirty years running large-scale infrastructure, and when I was diagnosed with severe obstructive sleep apnea, that's the frame I reached for — not because it's clever, but because it was the only one that made the problem legible to me. An airway collapsing under its own load every night isn't a willpower problem. It's a capacity problem: something in the system was over its structural limit, and the fix wasn't more motivation, it was reducing load.</p>
+      <p>The lever available to reduce that load was body mass. So I lost weight — 246 lbs down to about 198, roughly 48 pounds, over eight months — but the weight was never the target. It was the mechanism. Breathing was the objective, and the scale was just an instrument reading on the way to the one I actually cared about: the AHI.</p>
+      <p>This is the study that measured whether moving the first number moved the second.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE COMPARISON ============ -->
+  <section class="band">
+    <p class="band__mark">39.49 → 4.6 <span>/ the comparison</span></p>
+    <h2 class="band__title">Baseline vs. follow-up</h2>
+    <div class="col">
+      <p class="prose" style="margin-bottom:1.4rem;">Same device family both times (WatchPAT home study). Same person. The follow-up was done <strong>off CPAP</strong> for the night of the test — deliberately, because that's the only way to measure whether the underlying obstruction changed. A study done on the machine measures how well the machine works, not whether my airway got better on its own. I asked for it to be scheduled on those terms and waited rather than take whatever was fastest.</p>
+
+      <div class="metrics">
+        <div class="metrics__caption"><span>Metric</span><span>Baseline → Follow-up</span></div>
+        <div class="metric">
+          <div class="metric__name">AHI <span>apnea-hypopnea index, 3% desaturation</span></div>
+          <div class="metric__pair"><span class="metric__from">39.49</span><span class="metric__arrow">→</span><span class="metric__to">4.6</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric__name">Central AHI <span>events not driven by airway obstruction</span></div>
+          <div class="metric__pair"><span class="metric__from">4.58</span><span class="metric__arrow">→</span><span class="metric__to">0.00</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric__name">Nadir SpO2 <span>lowest blood-oxygen point of the night</span></div>
+          <div class="metric__pair"><span class="metric__from">83%</span><span class="metric__arrow">→</span><span class="metric__to">91%</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric__name">ODI <span>oxygen desaturation index</span></div>
+          <div class="metric__pair"><span class="metric__from">23.98</span><span class="metric__arrow">→</span><span class="metric__to">1.5</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric__name">RDI <span>respiratory disturbance index, 3%</span></div>
+          <div class="metric__pair"><span class="metric__from">40.55</span><span class="metric__arrow">→</span><span class="metric__to">7.6</span></div>
+        </div>
+      </div>
+
+      <p class="impression"><span>Clinic impression, follow-up study</span><em>Snoring without evidence for significant obstructive sleep apnea.</em></p>
+
+      <p class="prose" style="margin-top:1.4rem;">If you only read the topline, you stop here and call it solved. I'm not going to let you, or me, do that.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S WRONG ============ -->
+  <section class="band">
+    <p class="band__mark">Caveats <span>/ what's wrong with this number</span></p>
+    <h2 class="band__title">Four things, in order of how much they matter</h2>
+    <div class="col">
+      <div class="disc">
+        <h3>One: CPAP ran the whole time.</h3>
+        <p>I was prescribed CPAP after the baseline study and used it throughout. The follow-up test was off the machine for one night — that makes the <em>measurement</em> clean, because it's reading my untreated airway. But it does nothing about the fact that treating my apnea for eight months plausibly made the weight loss itself easier: better sleep, lower cortisol, better appetite regulation. The machine is tangled up in the cause even though it's not tangled up in this specific reading. There is no version of this experiment where CPAP wasn't running.</p>
+      </div>
+      <div class="disc">
+        <h3>Two: this is n=1, with no control.</h3>
+        <p>One person, no comparison group, nobody holding the other variables still. A severe-to-normal swing off CPAP is a strong result, and it's consistent with what the clinical literature says weight reduction does to AHI. "Consistent with" is the honest phrase. It is not "proves." I lost weight and my AHI collapsed; I can't prove the first caused the second the way a controlled trial could, and I'm not going to write the sentence that pretends I can.</p>
+      </div>
+      <div class="disc">
+        <h3>Three: the REM number is the ugly one, and I'm not hiding it.</h3>
+        <p>Broken out by sleep stage, my non-REM AHI was 1.8 — excellent. My REM AHI was 9.7. REM is where the residual airway instability is still concentrated, and 9.7 is not nothing. The single averaged number of 4.6 is real, but it's an average across a good stage and a worse one, and the worse one is worth watching. This is exactly the kind of detail a clean success story leaves out, which is why it's in this one.</p>
+      </div>
+      <div class="disc">
+        <h3>Four: one night is one night.</h3>
+        <p>Don't over-trust a single reading — a rule I apply to the bathroom scale, and it applies to sleep studies too. This is one good night of data. It's a strong one. It's still one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT I'M NOT DOING ============ -->
+  <section class="band">
+    <p class="band__mark">Read this twice <span>/ what I am not doing</span></p>
+    <h2 class="band__title">I am not telling you I'm done with CPAP</h2>
+    <div class="col">
+      <div class="warn">
+        <p>Whether the machine comes off is a clinical decision, made with my sleep physician, based on this study and whatever else she wants to look at. It is not a decision a good number on one home test authorizes on its own, and it is not one I'm going to narrate myself into on the internet.</p>
+        <p><strong>If you have diagnosed apnea and you're on a machine: a stranger's good follow-up result is not a reason to stop your treatment.</strong> Take your own data to your own doctor.</p>
+      </div>
+      <div class="prose">
+        <p>And the broader claim stays modest. Weight loss genuinely reduces AHI in the literature — but it's not a fixed exchange rate, it doesn't work the same for everyone, and it does not reliably eliminate apnea on its own. It's an adjunct to treatment, not a replacement for a sleep physician or a machine. This is a "here's what I changed and what happened to me" account. It is not a treatment plan, and it is not advice to skip the parts of your care that are keeping you safe at night.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IT MEANS ============ -->
+  <section class="band">
+    <p class="band__mark">The honest read <span>/ what it does mean</span></p>
+    <h2 class="band__title">What it does mean</h2>
+    <div class="col prose">
+      <p>With all four caveats standing, here's what I'll actually say.</p>
+      <p>I set this up as a capacity problem, not a willpower problem — something over its structural limit, with load as the available lever. I reduced the load. The instrument reading I actually cared about, the one underneath the scale, moved from severe to normal on an untreated measurement. That's the outcome the whole thing was aimed at, and it landed where it was aimed.</p>
+      <p>I committed to publishing this number whichever way it came back — better, unremarkable, or unchanged — before I knew which it would be, specifically so I couldn't talk myself into a story afterward. It happened to be the good one. That makes the caveats above more important, not less, because a favorable number is exactly the kind you're tempted to oversell.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="band">
+    <div class="cta">
+      <p>If the reframe here is useful to you — treating the problem as a load you debug rather than a discipline you white-knuckle — that's the part worth taking regardless of what you do next.</p>
+      <p>The full system I built out of it — what I ate, how I handled restaurants and travel and bad weeks, documented the way I'd document any infrastructure I had to keep running — is <strong>Minimum Viable Nutrition</strong>. Same case study, one person's system for one person's problem. Adapt it; don't adopt it whole.</p>
+      <a class="btn" href="/index.html#join">See the workspace — $49</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Minimum Viable Nutrition · a project by KyTech<br>
+    Not medical or nutritional advice. Talk to your doctor before changing your diet significantly, or before changing anything your health depends on.<br>
+    <a href="/index.html">Home</a> · <a href="/terms.html">Terms of Use</a> · <a href="/privacy.html">Privacy Policy</a></p>
+  </footer>
+
+</main>
+
+</body>
+</html>
